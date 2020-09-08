@@ -1,10 +1,10 @@
-# *Tiny Robot* Framework Alpine docker *container* image for _headless API tests_
+# *Tiny Robot* Framework Docker *Container* _for headless API tests_ using the _Debian-based official Python image_
 
 ## What is it?
 
-This project provides you with a [Tiny Alpine Linux Docker container image](https://github.com/mauricebrinkmann/tiny-robot-container) containing a simple Robot Framework installation on python 3.8.
+This project provides you with a [Tiny Robot Framework Docker container image](https://github.com/mauricebrinkmann/tiny-robot-container) containing a simple Robot Framework installation on _python:3.8-slim_.
 
-It comes with some Robot Framework libraries, but without Web GUI Test support - therefore you might want to use [this expanded docker robot framework container here](https://github.com/mauricebrinkmann/tiny-robot-container).
+It comes with some Robot Framework libraries, but without Web GUI Test support - therefore you might want to use [this expanded docker robot framework container here](https://github.com/mauricebrinkmann/docker-robot-framework).
 
 ## Versioning
 

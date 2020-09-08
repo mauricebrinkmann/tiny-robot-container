@@ -1,7 +1,7 @@
-FROM python:3.8-alpine3.12
+FROM python:3.8-slim
 
 MAINTAINER Maurice Brinkmann <mauricebrinkmann@users.noreply.github.com>
-LABEL description Tiny Robot Framework Alpine docker container image for headless API tests
+LABEL description Tiny Robot Frameworkdocker container for headless API tests using the Debian-based official Python image
 
 # Set the reports directory environment variable
 ENV ROBOT_REPORTS_DIR /opt/robotframework/reports
@@ -11,11 +11,6 @@ ENV ROBOT_TESTS_DIR /opt/robotframework/tests
 
 # Set the working directory environment variable
 ENV ROBOT_WORK_DIR /opt/robotframework/temp
-
-# Setup X Window Virtual Framebuffer
-ENV SCREEN_COLOUR_DEPTH 24
-ENV SCREEN_HEIGHT 1080
-ENV SCREEN_WIDTH 1920
 
 # Set number of threads for parallel execution
 # By default, no parallelisation
@@ -33,30 +28,15 @@ ENV ROBOT_FRAMEWORK_VERSION 3.2
 ENV SSH_LIBRARY_VERSION 3.4.0
 
 # Install system dependencies
-RUN apk update \
-
-  && apk --no-cache upgrade \
-  
-  && apk --no-cache add \
-    gcc \
-    libffi-dev \
-    linux-headers \
-    make \
-    musl-dev \
-    openssl-dev \
-    which \
-    wget \
-	wheel \
-    PyYAML \
-
-# Install Robot Framework and Libraries
-  && pip3 install \
+RUN pip install \
     --no-cache-dir \
     robotframework==$ROBOT_FRAMEWORK_VERSION \
     robotframework-httpctrl==$HTTPCTRL_VERSION \
     robotframework-pabot==$PABOT_VERSION \
     robotframework-requests==$REQUESTS_VERSION \
-    robotframework-sshlibrary==$SSH_LIBRARY_VERSION
+    robotframework-sshlibrary==$SSH_LIBRARY_VERSION\
+    PyYAML \
+	wheel \
 
 # Create the default report and work folders with the default user to avoid runtime issues
 # These folders are writeable by anyone, to ensure the user can be changed on the command line.
