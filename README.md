@@ -3,6 +3,7 @@
 ## What is it?
 
 This project provides you with a [Tiny Robot Framework Docker container image](https://github.com/mauricebrinkmann/tiny-robot-container) containing a simple Robot Framework installation on _python:3.8-slim_.
+(If you still prefer Alpine-based images over the Debian-based offical Python image, then you might find [this blog post](https://pythonspeed.com/articles/alpine-docker-python/) helpful.)
 
 It comes with some Robot Framework libraries, but without Web GUI Test support - therefore you might want to use [this expanded docker robot framework container here](https://github.com/mauricebrinkmann/docker-robot-framework).
 
