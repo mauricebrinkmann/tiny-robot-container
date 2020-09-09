@@ -27,6 +27,12 @@ ENV REQUESTS_VERSION 0.7.0
 ENV ROBOT_FRAMEWORK_VERSION 3.2
 ENV SSH_LIBRARY_VERSION 3.4.0
 
+# Update system path
+ENV PATH=/opt/robotframework/bin:$PATH
+
+# Copy test runner script into bin folder
+COPY run-tests.sh /opt/robotframework/bin/
+
 # Install system dependencies
 RUN pip install \
     --no-cache-dir \
@@ -49,13 +55,6 @@ RUN mkdir -p ${ROBOT_REPORTS_DIR} \
 # Allow any user to write logs
 RUN chmod ugo+w /var/log \
   && chown ${ROBOT_UID}:${ROBOT_GID} /var/log
-
-
-# Copy over test runner script
-COPY run-tests.sh /opt/robotframework/bin/
-
-# Update system path
-ENV PATH=/opt/robotframework/bin:$PATH
 
 # Set up a volume for the generated reports
 VOLUME ${ROBOT_REPORTS_DIR}
