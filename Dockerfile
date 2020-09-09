@@ -28,7 +28,7 @@ ENV ROBOT_FRAMEWORK_VERSION 3.2
 ENV SSH_LIBRARY_VERSION 3.4.0
 
 # Copy test runner script into bin folder
-COPY ./run-tests.sh /opt/robotframework/bin/
+COPY run_tests.sh /opt/robotframework/bin/
 
 # Update system path
 ENV PATH=/opt/robotframework/bin:$PATH
