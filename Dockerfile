@@ -30,9 +30,6 @@ ENV SSH_LIBRARY_VERSION 3.4.0
 # Copy test runner script into bin folder
 COPY run_tests.sh /opt/robotframework/bin/
 
-# Update system path
-ENV PATH=/opt/robotframework/bin:$PATH
-
 # Install system dependencies
 RUN pip install \
     --no-cache-dir \
@@ -65,4 +62,4 @@ USER ${ROBOT_UID}:${ROBOT_GID}
 WORKDIR ${ROBOT_WORK_DIR}
 
 # Execute all robot tests
-CMD ["run_tests.sh"]
+CMD ["sh /opt/robotframework/bin/run_tests.sh"]
