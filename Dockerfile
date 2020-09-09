@@ -12,6 +12,9 @@ ENV ROBOT_TESTS_DIR /opt/robotframework/tests
 # Set the working directory environment variable
 ENV ROBOT_WORK_DIR /opt/robotframework/temp
 
+# Set the bin directory environment variable
+ENV ROBOT_BIN_DIR /opt/robotframework/bin
+
 # Set number of threads for parallel execution
 # By default, no parallelisation
 ENV ROBOT_THREADS 1
@@ -28,7 +31,7 @@ ENV ROBOT_FRAMEWORK_VERSION 3.2
 ENV SSH_LIBRARY_VERSION 3.4.0
 
 # Copy test runner script into bin folder
-COPY run_tests.sh /opt/robotframework/bin/
+COPY run_tests.sh $ROBOT_BIN_DIR/
 
 # Install system dependencies
 RUN pip install \
@@ -47,11 +50,16 @@ RUN mkdir -p ${ROBOT_REPORTS_DIR} \
   && mkdir -p ${ROBOT_WORK_DIR} \
   && chown ${ROBOT_UID}:${ROBOT_GID} ${ROBOT_REPORTS_DIR} \
   && chown ${ROBOT_UID}:${ROBOT_GID} ${ROBOT_WORK_DIR} \
-  && chmod ugo+w ${ROBOT_REPORTS_DIR} ${ROBOT_WORK_DIR}
+  && chown -R ${ROBOT_UID}:${ROBOT_GID} ${ROBOT_BIN_DIR} \
+  && chmod ugo+w ${ROBOT_REPORTS_DIR} ${ROBOT_WORK_DIR} \
+  && chmod ug+rx ${ROBOT_BIN_DIR}/*.sh
 
 # Allow any user to write logs
 RUN chmod ugo+w /var/log \
   && chown ${ROBOT_UID}:${ROBOT_GID} /var/log
+
+# Update system path
+ENV PATH=$ROBOT_BIN_DIR:$PATH
 
 # Set up a volume for the generated reports
 VOLUME ${ROBOT_REPORTS_DIR}
@@ -62,4 +70,4 @@ USER ${ROBOT_UID}:${ROBOT_GID}
 WORKDIR ${ROBOT_WORK_DIR}
 
 # Execute all robot tests
-CMD ["sh /opt/robotframework/bin/run_tests.sh"]
+CMD ["run_tests.sh"]

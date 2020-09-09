@@ -134,7 +134,7 @@ The pipeline stage can also rely on a Docker agent, as shown in the example belo
                 }
                 steps {
                     sh '''
-                        /opt/robotframework/bin/run_tests.sh
+                        run_tests.sh
                     '''
                 }
             }
