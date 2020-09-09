@@ -65,4 +65,4 @@ USER ${ROBOT_UID}:${ROBOT_GID}
 WORKDIR ${ROBOT_WORK_DIR}
 
 # Execute all robot tests
-CMD ["run-tests.sh"]
+CMD ["run_tests.sh"]
