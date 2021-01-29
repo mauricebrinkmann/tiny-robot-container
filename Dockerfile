@@ -29,6 +29,7 @@ ENV PABOT_VERSION 1.8.0
 ENV REQUESTS_VERSION 0.7.0
 ENV ROBOT_FRAMEWORK_VERSION 3.2
 ENV SSH_LIBRARY_VERSION 3.4.0
+ENV DATADRIVER_VERSION 1.0.0
 
 # Copy test runner script into bin folder
 COPY run_tests.sh $ROBOT_BIN_DIR/
@@ -41,6 +42,7 @@ RUN pip install \
     robotframework-pabot==$PABOT_VERSION \
     robotframework-requests==$REQUESTS_VERSION \
     robotframework-sshlibrary==$SSH_LIBRARY_VERSION\
+    robotframework-datadriver==$DATADRIVER_VERSION\
     PyYAML \
 	wheel
 
