@@ -21,6 +21,8 @@ The versions used are:
 * [Robot Framework Pabot](https://github.com/mkorpela/pabot) 1.8.0
 * [Robot Framework Requests](https://github.com/bulkan/robotframework-requests) 0.7.0
 * [Robot Framework SSHLibrary](https://github.com/robotframework/SSHLibrary) 3.4.0
+* [Robot Framework Datadriver](https://github.com/Snooz82/robotframework-datadriver) 1.0.0
+* [Python XlsxWriter](https://xlsxwriter.readthedocs.io/changes.html) 1.3.7
 
 ## Running the container
 
