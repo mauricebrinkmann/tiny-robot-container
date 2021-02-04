@@ -30,6 +30,7 @@ ENV REQUESTS_VERSION 0.7.0
 ENV ROBOT_FRAMEWORK_VERSION 3.2
 ENV SSH_LIBRARY_VERSION 3.4.0
 ENV DATADRIVER_VERSION 1.0.0
+ENV XLSXWRITER_VERSION 1.3.7
 
 # Copy test runner script into bin folder
 COPY run_tests.sh $ROBOT_BIN_DIR/
@@ -43,6 +44,7 @@ RUN pip install \
     robotframework-requests==$REQUESTS_VERSION \
     robotframework-sshlibrary==$SSH_LIBRARY_VERSION\
     robotframework-datadriver==$DATADRIVER_VERSION\
+    XlsxWriter==$DATADRIVER_VERSION\
     PyYAML \
 	wheel
 
