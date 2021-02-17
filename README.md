@@ -22,7 +22,10 @@ The versions used are:
 * [Robot Framework Requests](https://github.com/bulkan/robotframework-requests) 0.7.0
 * [Robot Framework SSHLibrary](https://github.com/robotframework/SSHLibrary) 3.4.0
 * [Robot Framework Datadriver](https://github.com/Snooz82/robotframework-datadriver) 1.0.0
+* [openpyxl](https://openpyxl.readthedocs.io/en/stable/index.html) 3.0.6
 * [Python XlsxWriter](https://xlsxwriter.readthedocs.io/changes.html) 1.3.7
+
+These default versions are specified via environment variables in the Dockerfile.
 
 ## Running the container
 
