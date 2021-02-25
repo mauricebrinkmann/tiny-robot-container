@@ -44,7 +44,7 @@ RUN pip install \
     robotframework-pabot==$PABOT_VERSION \
     robotframework-requests==$REQUESTS_VERSION \
     robotframework-sshlibrary==$SSH_LIBRARY_VERSION\
-    robotframework-datadriver==$DATADRIVER_VERSION\
+    robotframework-datadriver[XLS]==$DATADRIVER_VERSION\
     openpyxl==$OPENPYXL_VERSION\
     XlsxWriter==$XLSXWRITER_VERSION\
     PyYAML \
