@@ -1,37 +1,42 @@
 FROM python:3.8-slim
 
-MAINTAINER Maurice Brinkmann <mauricebrinkmann@users.noreply.github.com>
-LABEL description Tiny Robot Frameworkdocker container for headless API tests using the Debian-based official Python image
+LABEL maintainer="Maurice Brinkmann <mauricebrinkmann@users.noreply.github.com>"
+LABEL description="Tiny Robot Frameworkdocker container for headless API tests using the Debian-based official Python image"
 
 # Set the reports directory environment variable
-ENV ROBOT_REPORTS_DIR /opt/robotframework/reports
+ENV ROBOT_REPORTS_DIR=/opt/robotframework/reports
 
 # Set the tests directory environment variable
-ENV ROBOT_TESTS_DIR /opt/robotframework/tests
+ENV ROBOT_TESTS_DIR=/opt/robotframework/tests
 
 # Set the working directory environment variable
-ENV ROBOT_WORK_DIR /opt/robotframework/temp
+ENV ROBOT_WORK_DIR=/opt/robotframework/temp
 
 # Set the bin directory environment variable
-ENV ROBOT_BIN_DIR /opt/robotframework/bin
+ENV ROBOT_BIN_DIR=/opt/robotframework/bin
+
+# No default pre or post processing commands in run_tests.sh, wich will be run with 'bash -c "$<commands variable>"''
+# -> overwrite for overall pre or post processsing, independent from the Robot run's return code
+ENV PRE_PROCESSING_COMMANDS=""
+ENV POST_PROCESSING_COMMANDS=""
 
 # Set number of threads for parallel execution
 # By default, no parallelisation
-ENV ROBOT_THREADS 1
+ENV ROBOT_THREADS=1
 
 # Define the default user who'll run the tests
-ENV ROBOT_UID 1000
-ENV ROBOT_GID 1000
+ENV ROBOT_UID=1000
+ENV ROBOT_GID=1000
 
 # Dependency versions
-ENV ROBOT_FRAMEWORK_VERSION 3.2
-ENV HTTPCTRL_VERSION 0.1.6
-ENV PABOT_VERSION 1.8.0
-ENV REQUESTS_VERSION 0.7.0
-ENV SSH_LIBRARY_VERSION 3.4.0
-ENV DATADRIVER_VERSION 1.0.0
-ENV OPENPYXL_VERSION 3.0.6
-ENV XLSXWRITER_VERSION 1.3.7
+ENV ROBOT_FRAMEWORK_VERSION=3.2
+ENV HTTPCTRL_VERSION=0.1.6
+ENV PABOT_VERSION=1.8.0
+ENV REQUESTS_VERSION=0.7.0
+ENV SSH_LIBRARY_VERSION=3.4.0
+ENV DATADRIVER_VERSION=1.0.0
+ENV OPENPYXL_VERSION=3.0.6
+ENV XLSXWRITER_VERSION=1.3.7
 
 # Copy test runner script into bin folder
 COPY run_tests.sh $ROBOT_BIN_DIR/

@@ -36,20 +36,6 @@ This container can be run using the following command:
         -v <local path to the test suites' folder>:/opt/robotframework/tests:Z \
         mauricebrinkmann/tiny-robot-framework:<version>
 
-### Switching browsers
-
-Browsers can be easily switched. It is recommended to define `${BROWSER} %{BROWSER}` in your Robot variables and to use `${BROWSER}` in your test cases. This allows to set the browser in a single place if needed.
-
-When running your tests, simply add `-e BROWSER=chrome` or `-e BROWSER=firefox` to the run command.
-
-### Changing the container's screen resolution
-
-It is possible to define the settings of the virtual screen in which the browser is run by changing several environment variables:
-
-* `SCREEN_COLOUR_DEPTH` (default: 24)
-* `SCREEN_HEIGHT` (default: 1080)
-* `SCREEN_WIDTH` (default: 1920)
-
 ### Changing the container's tests and reports directories
 
 It is possible to use different directories to read tests from and to generate reports to. This is useful when using a complex test file structure. To change the defaults, set the following environment variables:
@@ -116,7 +102,7 @@ It is possible to run the project from within a Jenkins pipeline by relying on t
         stages {
             stage('Functional regression tests') {
                 steps {
-                    sh "docker run --shm-size=1g -e BROWSER=firefox -v $WORKSPACE/robot-tests:/opt/robotframework/tests:Z -v $WORKSPACE/robot-reports:/opt/robotframework/reports:Z mauricebrinkmann/tiny-robot-framework:latest"
+                    sh "docker run --shm-size=1g -v $WORKSPACE/robot-tests:/opt/robotframework/tests:Z -v $WORKSPACE/robot-reports:/opt/robotframework/reports:Z mauricebrinkmann/tiny-robot-framework:latest"
                 }
             }
         }
@@ -133,7 +119,6 @@ The pipeline stage can also rely on a Docker agent, as shown in the example belo
                     args '--shm-size=1g -u root' }
                 }
                 environment {
-                    BROWSER = 'firefox'
                     ROBOT_TESTS_DIR = "$WORKSPACE/robot-tests"
                     ROBOT_REPORTS_DIR = "$WORKSPACE/robot-reports"
                 }
@@ -148,62 +133,21 @@ The pipeline stage can also rely on a Docker agent, as shown in the example belo
 
 ## Testing this project
 
-Not convinced yet? Simple tests have been prepared in the `test/` folder, you can run them using the following commands:
+Run tests in a local `test/` folder:
 
-    # Using Chromium
     docker run \
         -v `pwd`/reports:/opt/robotframework/reports:Z \
         -v `pwd`/test:/opt/robotframework/tests:Z \
-        -e BROWSER=chrome \
         mauricebrinkmann/tiny-robot-framework:latest
 
-    # Using Firefox
-    docker run \
-        -v `pwd`/reports:/opt/robotframework/reports:Z \
-        -v `pwd`/test:/opt/robotframework/tests:Z \
-        -e BROWSER=firefox \
-        mauricebrinkmann/tiny-robot-framework:latest
+For Windows users who use **PowerShell**:
 
-For Windows users who use **PowerShell**, the commands are slightly different:
-
-    # Using Chromium
     docker run \
         -v ${PWD}/reports:/opt/robotframework/reports:Z \
         -v ${PWD}/test:/opt/robotframework/tests:Z \
-        -e BROWSER=chrome \
         mauricebrinkmann/tiny-robot-framework:latest
-
-    # Using Firefox
-    docker run \
-        -v ${PWD}/reports:/opt/robotframework/reports:Z \
-        -v ${PWD}/test:/opt/robotframework/tests:Z \
-        -e BROWSER=firefox \
-        mauricebrinkmann/tiny-robot-framework:latest
-
-Screenshots of the results will be available in the `reports/` folder.
 
 ## Troubleshooting
-
-### Chromium is crashing
-
-Chrome drivers might crash due to the small size of `/dev/shm` in the docker container:
-> UnknownError: session deleted because of page crash
-
-This is [a known bug of Chromium](https://bugs.chromium.org/p/chromium/issues/detail?id=715363).
-
-To avoid this error, please change the shm size when starting the container by adding the following parameter: `--shm-size=1g` (or any other size more suited to your tests)
-
-### Accessing the logs
-
-In case further investigation is required, the logs can be accessed by mounting their folder. Simply add the following parameter to your `run` command:
-
-* Linux/Mac: ``-v `pwd`/logs:/var/log:Z``
-* Windows: ``-v ${PWD}/logs:/var/log:Z``
-
-Chromium allows to set additional environment properties, which can be useful when debugging:
-
-* `webdriver.chrome.verboseLogging=true`: enables the verbose logging mode
-* `webdriver.chrome.logfile=/path/to/chromedriver.log`: sets the path to Chromium's log file
 
 ### Error: Suite contains no tests
 
@@ -222,18 +166,3 @@ As there can sometimes be issues as to where the tests are run from, make sure t
 It is also important to check if Robot Framework is allowed to access the resources it needs, i.e.:
 * The folder where the tests are located,
 * The test files themselves.
-
-### Database tests are failing in spite of the DatabaseLibrary being present
-
-As per their official project page, the [Robot Framework DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library) contains utilities meant for Robot Framework's usage. This can allow you to query your database after an action has been made to verify the results. This is compatible with any Database API Specification 2.0 module.
-
-It is anyway mandatory to extend the container image to install the specific database module relevant to your tests, such as:
-* [MS SQL](https://pymssql.readthedocs.io/en/latest/intro.html): `pip install pymssql`
-* [MySQL](https://dev.mysql.com/downloads/connector/python/): `pip install pymysql`
-* [Oracle](https://www.oracle.com/uk/database/technologies/appdev/python.html): `pip install py2oracle`
-* [PostgreSQL](http://pybrary.net/pg8000/index.html): `pip install pg8000`
-
-## Please contribute to the!
-
-Have you found an issue? Do you have an idea for an improvement? Feel free to contribute by submitting it [here on THIS GitHub project](https://github.com/mauricebrinkmann/tiny-robot-container/issues)
-
